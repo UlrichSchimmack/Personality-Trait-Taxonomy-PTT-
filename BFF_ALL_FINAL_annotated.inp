@@ -1,0 +1,896 @@
+
+! ========================================================================
+! FACETMAP | HIERARCHICAL BIG FIVE REFERENCE MODEL
+! Annotated original Mplus input - original model statements retained.
+! Purpose: reference model for comparing rival personality structures.
+! Five broad latent factors (N E O A C) with secondary facet loadings,
+! item-level HALO and RSET factors, and selected facet residual covariances.
+! The full variable dictionary lists 77 pools of 6 items; USEVARIABLES
+! selects 3 indicators per modeled facet. Item IDs refer to original data.
+! IMPORTANT: comments describe existing syntax; they do not change it.
+! Data file path is relative: set DATA FILE IS to your local data path.
+! Verify data-sharing permission before posting respondent data publicly.
+! ========================================================================
+
+
+! ========================================================================
+! 1 | PROJECT AND DATA
+! Title and source data file.
+! ========================================================================
+Title: 
+
+
+  DATA: 
+
+  FILE IS facet_map.dat;
+
+
+! ========================================================================
+! 2 | ORIGINAL VARIABLE DICTIONARY AND ANALYSIS ITEMS
+! NAMES ARE enumerates all raw data columns in their original order.
+! Inline Y/N and descriptor notes are carried over from the source file.
+! Only the subsequent USEVARIABLES list is used for this estimation.
+! ========================================================================
+  VARIABLE: 
+
+   NAMES ARE 
+
+
+   DQ1 DQ2 DQ3 DQ4 DQ5 DQ6 DQ7 DQ8 
+
+   MQ1_1 MQ1_2 MQ1_3 MQ1_4 MQ1_5 MQ1_6       !!Y O_ABSTRACT Abstract Thinking  
+   MQ2_1 MQ2_2 MQ2_3 MQ2_4 MQ2_5 MQ2_6       !!Y O_CURIOUS  Curiosity 
+   MQ3_1 MQ3_2 MQ3_3 MQ3_4 MQ3_5 MQ3_6       !!Y O_ART Aesthetics 
+   MQ4_1 MQ4_2 MQ4_3 MQ4_4 MQ4_5 MQ4_6       !!Y O_N_COG / Need for Cognition
+   MQ5_1 MQ5_2 MQ5_3 MQ5_4 MQ5_5 MQ5_6       !!Y O_CRATIVE / Imagination
+   MQ6_1 MQ6_2 MQ6_3 MQ6_4 MQ6_5 MQ6_6       !!N O_ABSORB / Absorbition 
+   MQ7_1 MQ7_2 MQ7_3 MQ7_4 MQ7_5 MQ7_6       !!Y O_FANTA / Fantasy
+   MQ8_1 MQ8_2 MQ8_3 MQ8_4 MQ8_5 MQ8_6       !!N C_PERSERVER / Perserverence (L < .4)
+   MQ9_1 MQ9_2 MQ9_3 MQ9_4 MQ9_5 MQ9_6       !!Y C_PLAN / Planful
+   MQ10_1 MQ10_2 MQ10_3 MQ10_4 MQ10_5 MQ10_6 !!Y C_S_CONTROL / Self-Control  
+   MQ11_1 MQ11_2 MQ11_3 MQ11_4 MQ11_5 MQ11_6 !!Y C_ORDER / Orderly
+   MQ12_1 MQ12_2 MQ12_3 MQ12_4 MQ12_5 MQ12_6 !!Y C_DETAIL 
+   MQ13_1 MQ13_2 MQ13_3 MQ13_4 MQ13_5 MQ13_6 !!Y C_PROCRAST / Procrastination (R) 
+   MQ14_1 MQ14_2 MQ14_3 MQ14_4 MQ14_5 MQ14_6 !!Y C_IMPULSIVE / Impulsive (R) OK
+   MQ15_1 MQ15_2 MQ15_3 MQ15_4 MQ15_5 MQ15_6 !!N C_EFFICACY / Self-Efficacy (L < .4)
+   MQ16_1 MQ16_2 MQ16_3 MQ16_4 MQ16_5 MQ16_6 !!Y C_DEPEND / Dependability 
+   MQ17_1 MQ17_2 MQ17_3 MQ17_4 MQ17_5 MQ17_6 !!Y O_ECCENTRIC / Eccentricity  
+   MQ18_1 MQ18_2 MQ18_3 MQ18_4 MQ18_5 MQ18_6 !!Y A_ASSERT / Assertive (R) OK
+   MQ19_1 MQ19_2 MQ19_3 MQ19_4 MQ19_5 MQ19_6 !!Y A_CRITICAL / Critical 
+   MQ20_1 MQ20_2 MQ20_3 MQ20_4 MQ20_5 MQ20_6 !!Y E_S_CONF Social Confidence 
+   MQ21_1 MQ21_2 MQ21_3 MQ21_4 MQ21_5 MQ21_6 !!Y A_FORGIVE / Forgiving   
+   MQ22_1 MQ22_2 MQ22_3 MQ22_4 MQ22_5 MQ22_6 !!N X Stubborn  
+   MQ23_1 MQ23_2 MQ23_3 MQ23_4 MQ23_5 MQ23_6 !!Y E_SOC / Sociability
+   MQ24_1 MQ24_2 MQ24_3 MQ24_4 MQ24_5 MQ24_6 !!Y A_LEADER / Leadership 
+   MQ25_1 MQ25_2 MQ25_3 MQ25_4 MQ25_5 MQ25_6 !!Y E_S_RELY /  Self-Reliance (R)
+   MQ26_1 MQ26_2 MQ26_3 MQ26_4 MQ26_5 MQ26_6 !!Y E_AFFA /  Affilibility
+   MQ27_1 MQ27_2 MQ27_3 MQ27_4 MQ27_5 MQ27_6 !!Y E E_INIT E_CONF  Social Boldness
+   MQ28_1 MQ28_2 MQ28_3 MQ28_4 MQ28_5 MQ28_6 !!Y E_SOCDEP / Social Dependence
+   MQ29_1 MQ29_2 MQ29_3 MQ29_4 MQ29_5 MQ29_6 !!N E_ACCEPT / Need for Acceptance 
+   MQ30_1 MQ30_2 MQ30_3 MQ30_4 MQ30_5 MQ30_6 !!N E_POS / Optimism   (L < .4, N > |.4|)
+   MQ31_1 MQ31_2 MQ31_3 MQ31_4 MQ31_5 MQ31_6 !!Y E_SURGE / Surgency 
+   MQ32_1 MQ32_2 MQ32_3 MQ32_4 MQ32_5 MQ32_6 !!N E_VIgor OK
+   MQ33_1 MQ33_2 MQ33_3 MQ33_4 MQ33_5 MQ33_6 !!N X Hedonism (-N, +E)  
+   MQ34_1 MQ34_2 MQ34_3 MQ34_4 MQ34_5 MQ34_6 !!Y N_S_STRESS / Anxiety 
+   MQ35_1 MQ35_2 MQ35_3 MQ35_4 MQ35_5 MQ35_6 !!Y N_WORRY / Worry   
+   MQ36_1 MQ36_2 MQ36_3 MQ36_4 MQ36_5 MQ36_6 !!Y N_DEP /  Depression 
+   MQ37_1 MQ37_2 MQ37_3 MQ37_4 MQ37_5 MQ37_6 !!Y N_RUMINATE / Rumination  
+   MQ38_1 MQ38_2 MQ38_3 MQ38_4 MQ38_5 MQ38_6 !!Y N_IRRIT / Anger
+   MQ39_1 MQ39_2 MQ39_3 MQ39_4 MQ39_5 MQ39_6 !!N N_S_CRITIC / Sensitive to Criticism 
+   MQ40_1 MQ40_2 MQ40_3 MQ40_4 MQ40_5 MQ40_6 !!Y A_INDIFF CALLOUS  
+   MQ41_1 MQ41_2 MQ41_3 MQ41_4 MQ41_5 MQ41_6 !!N N Inferiority - too much overlap with depression, not a trait, too evaluative
+   MQ42_1 MQ42_2 MQ42_3 MQ42_4 MQ42_5 MQ42_6 !!Y A_SUPERIOR Grandiosity   
+   MQ43_1 MQ43_2 MQ43_3 MQ43_4 MQ43_5 MQ43_6 !!Y A_MANI Manipulative 
+   MQ44_1 MQ44_2 MQ44_3 MQ44_4 MQ44_5 MQ44_6 !!N A_HELPFUL / Altruism  (A L < .4, E L > .4) 
+   MQ45_1 MQ45_2 MQ45_3 MQ45_4 MQ45_5 MQ45_6 !!! A_SYMPATHY Empathy 
+   MQ46_1 MQ46_2 MQ46_3 MQ46_4 MQ46_5 MQ46_6 !!N N_COURAGE Courageous
+   MQ47_1 MQ47_2 MQ47_3 MQ47_4 MQ47_5 MQ47_6 !!! C ACHIEVEMENT
+   MQ48_1 MQ48_2 MQ48_3 MQ48_4 MQ48_5 MQ48_6 !-- - Emotional Sensitivity (low internal consistency) 
+   MQ49_1 MQ49_2 MQ49_3 MQ49_4 MQ49_5 MQ49_6 !!N N_CAUTIOUS / Risk Aversion
+   MQ50_1 MQ50_2 MQ50_3 MQ50_4 MQ50_5 MQ50_6 !!! O_TRAD / Tradition
+   MQ51_1 MQ51_2 MQ51_3 MQ51_4 MQ51_5 MQ51_6 !-- - Intolerance (low internal consistency)  
+   MQ52_1 MQ52_2 MQ52_3 MQ52_4 MQ52_5 MQ52_6 !!! O PUNITIVE  
+   MQ53_1 MQ53_2 MQ53_3 MQ53_4 MQ53_5 MQ53_6 !!! A_UNETHICAL / 
+   MQ54_1 MQ54_2 MQ54_3 MQ54_4 MQ54_5 MQ54_6 !!! O Novelty OK
+   MQ55_1 MQ55_2 MQ55_3 MQ55_4 MQ55_5 MQ55_6 !!! A Aggression (R) Confrontational OK
+   MQ56_1 MQ56_2 MQ56_3 MQ56_4 MQ56_5 MQ56_6 !!! X_HARM_AVOID / Harm avoidance 
+   MQ57_1 MQ57_2 MQ57_3 MQ57_4 MQ57_5 MQ57_6 !!! A_VENGE Vengeful 
+   MQ58_1 MQ58_2 MQ58_3 MQ58_4 MQ58_5 MQ58_6 !!! N Distrust OK
+   MQ59_1 MQ59_2 MQ59_3 MQ59_4 MQ59_5 MQ59_6 !!! E_EXCITE Excitement 
+   MQ60_1 MQ60_2 MQ60_3 MQ60_4 MQ60_5 MQ60_6 !!! E_HUMOR Humor
+   MQ61_1 MQ61_2 MQ61_3 MQ61_4 MQ61_5 MQ61_6 !!! E_S_DISCLOSE / Personal Disclosure
+   MQ62_1 MQ62_2 MQ62_3 MQ62_4 MQ62_5 MQ62_6 !!! A_Honesty / Integrity OK 
+   MQ63_1 MQ63_2 MQ63_3 MQ63_4 MQ63_5 MQ63_6 !!! X_EMBD / Emotion Based Decision Making
+   MQ64_1 MQ64_2 MQ64_3 MQ64_4 MQ64_5 MQ64_6 !!! A_FAIR
+
+   MQ65_1 MQ65_2 MQ65_3 MQ65_4 MQ65_5 MQ65_6 !!Y E_GRATITUDE / Gratitude 
+   MQ66_1 MQ66_2 MQ66_3 MQ66_4 MQ66_5 MQ66_6 !!! O_S_REF self-reflection / Introspection
+
+   MQ67_1 MQ67_2 MQ67_3 MQ67_4 MQ67_5 MQ67_6 !!! X X_EXTRO  / Extrospection  
+   MQ68_1 MQ68_2 MQ68_3 MQ68_4 MQ68_5 MQ68_6 !!! A_PROVOKE / Provocative/Antagonistic (R)
+   MQ69_1 MQ69_2 MQ69_3 MQ69_4 MQ69_5 MQ69_6 !!! E_WARMTH / Warmth 
+   MQ70_1 MQ70_2 MQ70_3 MQ70_4 MQ70_5 MQ70_6 !-- X_SPIRIT / Spirituality  
+   MQ71_1 MQ71_2 MQ71_3 MQ71_4 MQ71_5 MQ71_6 !!! A_RURDE / Rude 
+   MQ72_1 MQ72_2 MQ72_3 MQ72_4 MQ72_5 MQ72_6 !!! E_N_ATT Need for Attention 
+   MQ73_1 MQ73_2 MQ73_3 MQ73_4 MQ73_5 MQ73_6 !!! C_DISTRACT / Disctractability
+   MQ74_1 MQ74_2 MQ74_3 MQ74_4 MQ74_5 MQ74_6 !!! N_INSECURE / Insecure Attachment
+
+   MQ75_1 MQ75_2 MQ75_3 MQ75_4 MQ75_5 MQ75_6 !!Y N_ENVY / Envy
+   MQ76_1 MQ76_2 MQ76_3 MQ76_4 MQ76_5 MQ76_6 !!N N_INDECI Indecisive
+   MQ77_1 MQ77_2 MQ77_3 MQ77_4 MQ77_5 MQ77_6 !!! N_TOL_AMBI  / Tolerance of Ambiguilty 
+  ; 
+
+  !!! 5 remaining
+
+
+! ========================================================================
+! 2B | SELECTED INDICATORS
+! Each listed triplet specifies the three observed item indicators used
+! for one latent facet in the MODEL section.
+! Listed original designations are annotations, not model instructions.
+! ========================================================================
+   USEVARIABLES  
+
+   MQ34_2 MQ34_3 MQ34_6               ! N_S_STRESS
+   MQ35_2 MQ35_4 MQ35_5               ! N_WORRY
+   MQ36_1 MQ36_3 MQ36_4               ! N_DEP
+   MQ37_1 MQ37_2 MQ37_5               ! N_RUMINATE
+   MQ39_1 MQ39_4 MQ39_5               ! N_S_CRITIC
+   MQ38_1 MQ38_3 MQ38_5               ! N_IRRIT
+   MQ75_1 MQ75_2 MQ75_3               ! N_ENVY
+   MQ76_3 MQ76_4 MQ76_5               ! N_INDECISIVE 
+   MQ77_3 MQ77_5 MQ77_6               ! N_TOL_AMBI
+   MQ74_3 MQ74_4 MQ74_6               ! N_INSECURE
+   MQ67_2 MQ67_3 MQ67_4               ! N_EXTRO
+   MQ46_2 MQ46_5 MQ46_6               ! N_COURAGE
+   MQ49_1 MQ49_2 MQ49_3               ! N_CAUTIOUS
+   MQ58_1 MQ58_3 MQ58_4               ! N_DISTRUST 
+
+   !!!
+
+   MQ69_2 MQ69_4 MQ69_6               ! E_WARMTH
+   MQ23_1 MQ23_2 MQ23_4               ! E_SOC
+   MQ27_3 MQ27_4 MQ27_6               ! E_CONF
+   MQ20_4 MQ20_5 MQ20_6               ! E_S_CONF
+   MQ26_2 MQ26_5 MQ26_6               ! E_AFFA
+   MQ31_3 MQ31_4 MQ31_5               ! E_SURGE
+   MQ28_1 MQ28_4 MQ28_6               ! E_SOCDEP
+   MQ25_3 MQ25_4 MQ25_5               ! E_S_RELY
+   MQ32_1 MQ32_2 MQ32_3               ! E_VIGOR
+   MQ30_3 MQ30_4 MQ30_5               ! E_POS
+   MQ65_2 MQ65_3 MQ65_4               ! E_GRATITUDE
+   MQ61_3 MQ61_4 MQ61_6               ! E_DISCLOSE   
+   MQ72_4 MQ72_5 MQ72_6               ! E_ATTENTION
+   MQ63_1 MQ63_2 MQ63_3               ! E_EBDM 
+   MQ29_3 MQ29_4 MQ29_6               ! E_ACCEPT 
+   MQ59_2 MQ59_5 MQ59_6               ! E_EXCITE 
+
+
+   !!!
+
+   MQ2_1  MQ2_2  MQ2_3                ! O_CURIOUS
+   MQ3_3  MQ3_4  MQ3_5                ! O_ART
+   MQ4_1  MQ4_2  MQ4_5                ! O_N_COG
+   MQ1_1  MQ1_3  MQ1_5                ! O_ABSTRACT
+   MQ54_2 MQ54_4 MQ54_5               ! O_NOVEL 
+   MQ6_3  MQ6_4  MQ6_5                ! O_ABSORB 
+   MQ5_3  MQ5_4  MQ5_6                ! O_FANTA
+   MQ7_1  MQ7_3  MQ7_5                ! O_CREATIVE
+   MQ17_4 MQ17_5 MQ17_6               ! O_ECCENTRIC
+   MQ60_1 MQ60_4 MQ60_5               ! O_HUMOR 
+   MQ66_3 MQ66_4 MQ66_5               ! O_INTROSPEC
+   MQ50_1 MQ50_2 MQ50_3               ! O_TRAD 
+   MQ52_1 MQ52_2 MQ52_3               ! O_PUNITIVE
+   
+   !!!
+
+   MQ43_2 MQ43_4 MQ43_6               ! A_MANI     (R)
+   MQ53_1 MQ53_3 MQ53_5               ! A_IMMORAL  (R)
+   MQ57_1 MQ57_4 MQ57_6               ! A_VENGEFUL (R)
+   MQ42_1 MQ42_4 MQ42_6               ! A_SUPERIOR (R)
+   MQ55_1 MQ55_2 MQ55_6               ! A_CONFRONT (R)
+   MQ19_2 MQ19_3 MQ19_4               ! A_CRITICAL (R) 
+   MQ68_2 MQ68_3 MQ68_5               ! A_PROVOKE  (R)
+   MQ18_2 MQ18_3 MQ18_5               ! A AsSERT   (R)
+   MQ24_2 MQ24_4 MQ24_5               ! A_LEADER   (R)
+   MQ40_2 MQ40_4 MQ40_5               ! A_INDIFF   (R)
+
+   MQ21_1 MQ21_3 MQ21_5               ! A_FORGIVE  
+   MQ44_1 MQ44_4 MQ44_6               ! A_HELPFUL 
+   MQ45_3 MQ45_4 MQ45_6               ! A_SYMPATHY  
+   MQ62_3 MQ62_4 MQ62_6               ! A_HONEST
+   MQ64_2 MQ64_4 MQ64_5               ! A_FAIR
+   MQ22_1 MQ22_3 MQ22_4               ! A_STUBBORN (R)
+
+    
+   !!!
+
+   MQ10_2 MQ10_3 MQ10_4               ! C_S_CONTROL
+   MQ9_2  MQ9_3  MQ9_4                ! C_PLAN
+   MQ11_1 MQ11_2 MQ11_6               ! C_ORDER
+   MQ12_1 MQ12_3 MQ12_5               ! C_DETAIL
+   MQ15_2 MQ15_3 MQ15_4               ! C_EFFICAY
+   MQ16_2 MQ16_3 MQ16_6               ! C_DEPEND
+
+   MQ47_4 MQ47_5 MQ47_6               ! C_ACHIEVE
+   MQ8_3  MQ8_4  MQ8_5                ! C_PERSEVERE
+
+   MQ14_1 MQ14_3 MQ14_4               ! C_IMPULSIVE (R)
+   MQ13_1 MQ13_2 MQ13_3               ! C_PROCRAST  (R)
+   MQ73_3 MQ73_4 MQ73_5               ! C_DISTRACT  (R)
+
+   !!!
+  
+   
+   ;
+
+
+
+! ========================================================================
+! 3 | ESTIMATION SETTINGS
+! MODEL = NOCOV suppresses Mplus default latent covariance estimation.
+! Residual facet covariances are instead explicitly specified below.
+! ========================================================================
+  ANALYSIS: 
+
+  MODEL = NOCOV;
+  
+  
+
+! ========================================================================
+! 4 | LATENT MEASUREMENT AND STRUCTURAL SPECIFICATION
+! BY declares a latent factor measured by indicators.
+! In Mplus, @ fixes a parameter; * provides a free starting value.
+! E.g., X@-1 is fixed at -1; X*-.2 starts at -.2 and is estimated.
+! Cross-item BY statements permit selected secondary item loadings.
+! Do not interpret a * start value as the final loading estimate.
+! ========================================================================
+  MODEL:
+
+
+
+! ========================================================================
+! 4A | FACET MEASUREMENT: N-RELATED FACETS
+! ========================================================================
+  N_S_STRESS   by MQ34_2 MQ34_3 MQ34_6           ;        
+  N_S_STRESS   BY MQ60_5*-.2                     ;
+  N_S_STRESS   BY MQ66_3*.2                      ;
+  N_WORRY      by MQ35_2 MQ35_4 MQ35_5           ;          
+  N_DEP        by MQ36_1 MQ36_3 MQ36_4           ;        
+  N_RUMINATE   by MQ37_1 MQ37_2 MQ37_5           ;
+  N_RUMINATE   BY MQ15_2                         ;
+  N_RUMINATE   BY MQ38_5                         ;
+  N_S_CRITIC   by MQ39_1 MQ39_4 MQ39_5           ;        
+  N_IRRIT      by MQ38_1 MQ38_3 MQ38_5           ;        
+  N_IRRIT      BY MQ62_3                         ;
+  N_ENVY       by MQ75_1 MQ75_2 MQ75_3           ;
+  N_INDECISIVE by MQ76_3 MQ76_4 MQ76_5           ;
+  N_TOL_AMBI   by MQ77_3@-1 MQ77_5*-1 MQ77_6*-1  ;
+  N_INSECURE   by MQ74_3 MQ74_4 MQ74_6           ; 
+  N_EXTRO      by MQ67_2 MQ67_3 MQ67_4           ;
+  N_COURAGE    by MQ46_2 MQ46_5-MQ46_6*-1        ;
+  N_CAUTIOUS   by MQ49_1 MQ49_2 MQ49_3           ;
+  N_DISTRUST   by MQ58_1 MQ58_3 MQ58_4           ;
+  
+  !!!
+
+
+! ========================================================================
+! 4B | FACET MEASUREMENT: E-RELATED FACETS
+! ========================================================================
+  E_WARMTH     by MQ69_2    MQ69_4     MQ69_6    ;        
+  E_SOC        by MQ23_1    MQ23_2     MQ23_4    ;       
+  E_CONF       by MQ27_3@-1 MQ27_4*-1  MQ27_6*-1 ;
+  E_CONF       BY MQ3_3*-2                       ;
+  E_CONF       BY MQ18_2*.3                      ;
+  E_S_CONF     by MQ20_4    MQ20_5     MQ20_6    ;
+  E_AFFA       by MQ26_2 MQ26_5 MQ26_6           ; 
+  E_AFFA       BY MQ20_4                         ;
+  E_SURGE      by MQ31_3 MQ31_4 MQ31_5           ;
+  E_SURGE      BY MQ75_1                         ;
+  E_SURGE      BY MQ66_4 *.2                     ;
+  E_VIGOR      by MQ32_1 MQ32_2 MQ32_3           ;
+  E_VIGOR      BY MQ46_5                         ;
+  E_SOCDEP     by MQ28_1 MQ28_4*-1 MQ28_6        ;
+  E_S_RELY     by MQ25_3 MQ25_4 MQ25_5           ; 
+  E_POS        by MQ30_3 MQ30_4 MQ30_5           ;
+  E_POS        BY MQ32_3*.2                      ;
+  E_POS        BY MQ65_2*.3                      ;
+  E_POS        BY MQ65_3*.2                      ;
+  E_GRATITUDE  by MQ65_2 MQ65_3 MQ65_4           ;
+  E_DISCLOSE   by MQ61_3 MQ61_4 MQ61_6*-1        ;
+  E_DISCLOSE   by MQ18_5*.2                      ;
+  E_DISCLOSE   BY MQ29_3*.2                      ;
+  E_ATTENTION  by MQ72_4 MQ72_5 MQ72_6           ;
+  E_EBDM       by MQ63_1 MQ63_2 MQ63_3           ;
+  E_EBDM       BY MQ50_3                         ;
+  E_ACCEPT     by MQ29_3@1 MQ29_4@-1 MQ29_6@1    ;
+  E_ACCEPT     BY MQ72_5                         ;
+  E_EXCITE     by MQ59_2 MQ59_5 MQ59_6           ;
+  E_EXCITE     BY MQ32_2 *.2                     ;
+  E_EXCITE     BY MQ7_1 *.2                      ;
+ 
+  !!!
+
+
+! ========================================================================
+! 4C | FACET MEASUREMENT: O-RELATED FACETS
+! ========================================================================
+  O_CURIOUS   by MQ2_1    MQ2_2*1  MQ2_3*1       ;
+  O_ART       by MQ3_3    MQ3_4    MQ3_5         ; 
+  O_ABSTRACT  by MQ1_1@-1 MQ1_3*-1 MQ1_5*-1      ;
+  O_ABSTRACT  by MQ54_2*-.2                      ;
+  O_ABSTRACT  bY MQ4_2                           ;
+  O_NOVEL     by MQ54_2   MQ54_4   MQ54_5        ; 
+  O_NOVEL     BY MQ2_3                           ;
+  O_NOVEL     BY MQ4_1                           ;
+  O_ABSORB    by MQ6_3    MQ6_4    MQ6_5         ; 
+  O_FANTA     by MQ7_1@1  MQ7_3    MQ7_5         ;  
+  O_FANTA     BY MQ6_3*-.2                       ;
+  O_CREATIVE  by MQ5_3    MQ5_4    MQ5_6         ;
+  O_ECCENTRIC by MQ17_4   MQ17_5   MQ17_6        ;
+  O_N_COG     by MQ4_1@-1 MQ4_2*-1 MQ4_5*-1      ;
+  O_HUMOR     by MQ60_1   MQ60_4   MQ60_5        ;
+  O_HUMOR     BY MQ31_5*.2                       ;
+  O_INTROSPEC by MQ66_3   MQ66_4   MQ66_5        ;
+  O_PUNITIVE  by MQ52_1   MQ52_2   MQ52_3        ;
+  O_PUNITIVE  BY MQ50_3*.2                       ;
+  O_TRAD      by MQ50_1 MQ50_2 MQ50_3            ;
+  O_TRAD      BY MQ62_6                          ; 
+  
+  !!! 
+
+
+! ========================================================================
+! 4D | FACET MEASUREMENT: A-RELATED FACETS
+! ========================================================================
+  A_MANI      by MQ43_2    MQ43_4   MQ43_6       ;          
+  A_IMMORAL   by MQ53_1    MQ53_3   MQ53_5       ;
+  A_VENGEFUL  by MQ57_1    MQ57_4   MQ57_6       ;
+  A_SUPERIOR  by MQ42_1    MQ42_4   MQ42_6       ;  
+  A_CONFRONT  by MQ55_1@1  MQ55_2*1 MQ55_6*1     ; 
+  A_ASSERT    by MQ18_2    MQ18_3   MQ18_5       ;   
+  A_CRITICAL  by MQ19_2    MQ19_3   MQ19_4       ;   
+  A_PROVOKE   by MQ68_2    MQ68_3   MQ68_5       ; 
+  A_LEADER    by MQ24_2@-1 MQ24_4   MQ24_5       ; 
+  A_INDIFF    by MQ40_2    MQ40_4   MQ40_5       ;
+  A_FORGIVE   by MQ21_1    MQ21_3   MQ21_5       ;
+  A_HELPFUL   by MQ44_1    MQ44_4   MQ44_6*-1    ;
+  A_SYMPATHY  by MQ45_3    MQ45_4   MQ45_6       ;
+  A_HONEST    by MQ62_3    MQ62_4   MQ62_6       ;
+  A_FAIR      by MQ64_2    MQ64_4   MQ64_5       ;
+  A_STUBBORN  by MQ22_1    MQ22_3   MQ22_4       ;
+  A_STUBBORN  bY MQ57_1                          ;
+   
+  !!!
+  
+
+! ========================================================================
+! 4E | FACET MEASUREMENT: C-RELATED FACETS
+! ========================================================================
+  C_S_CONTROL by MQ10_2 MQ10_3    MQ10_4*-1      ;       
+  C_PLAN      by MQ9_2  MQ9_3     MQ9_4          ;     
+  C_ORDER     by MQ11_1 MQ11_2*-1 MQ11_6         ;           
+  C_DETAIL    by MQ12_1 MQ12_3    MQ12_5         ;
+  C_DETAIL    BY MQ47_6                          ;
+  C_DEPEND    by MQ16_2 MQ16_3    MQ16_6         ;
+  C_EFFICACY  by MQ15_2 MQ15_3    MQ15_4         ;
+  C_EFFICACY  BY MQ75_3*                         ;
+  C_ACHIEVE   by MQ47_4 MQ47_5    MQ47_6         ;
+  C_PERSEVERE by MQ8_3  MQ8_4     MQ8_5          ;
+  C_IMPULSIVE by MQ14_1 MQ14_3    MQ14_4         ;       
+  C_PROCRAST  by MQ13_1 MQ13_2    MQ13_3         ;      
+  C_PROCRAST  BY MQ9_2                           ;
+  C_PROCRAST  BY MQ77_6*.2                       ;
+  C_DISTRACT  by MQ73_3 MQ73_4    MQ73_5         ;       
+            
+  !!!
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+! ========================================================================
+! 5 | SECOND-ORDER BIG FIVE FACTORS
+! N, E, O, A, C are broad latent factors defined by facet factors.
+! Each begins with primary facet loadings; secondary loadings on facets
+! from other domains are estimated in the later statements.
+! Thus independent broad factors can still explain cross-domain overlap.
+! Check estimated factor correlations/identification before inferring
+! that higher-order orthogonality was formally imposed in every variant.
+! ========================================================================
+  N by N_S_STRESS;
+  N by N_Worry;
+  N by N_DEP;
+  N by N_RUMINATE;
+  N by N_S_CRITIC;
+  N by N_IRRIT;
+  N by N_ENVY;
+  N by N_INDECISIVE;
+  N by N_TOL_AMBI;
+  N by N_INSECURE;
+  N by N_EXTRO;
+  N by N_COURAGE;
+  N by N_CAUTIOUS;
+  N by N_DISTRUST;
+
+  N by E_CONF*-.5;
+  N by E_SURGE*-.2;
+  N by E_AFFA*-.2;
+  N by E_S_CONF*-2;
+  N by E_S_RELY*;
+  N by E_POS*-.2;
+  N by E_VIGOR*-.5;
+  N by E_DISCLOSE*-.2;
+  N by E_ATTENTION*-.2;
+  N by E_ACCEPT;
+  N BY E_SOC*-.2;
+  N by E_WARMTH*-.2;
+  N by E_EXCITE*-.2;
+
+  N BY O_FANTA*.2;
+  N by O_CREATIVE*-.2;
+  N BY O_ABSTRACT; 
+  N BY O_HUMOR*-.2; 
+  
+  N BY A_FAIR ; 
+  N by A_SUPERIOR*-.2;
+  N by A_CONFRONT;
+  N BY A_CRITICAL;
+  N BY A_FORGIVE*-.2;
+  N by A_INDIFF*1;
+  N BY A_ASSERT*-.2; 
+  N BY A_SYMPATHY ; 
+  N BY A_MANI*-.2;
+  N BY A_PROVOKE*-.2;
+  N BY A_LEADER*-.2;
+  N by A_STUBBORN;
+
+  N BY C_DISTRACT*.2;
+  N BY C_PROCRAST*.2;
+  N BY C_S_CONTROL*-.2;
+  N BY C_EFFICACY*-.2;
+  N BY C_PERSEVERE*-.2;
+  N by C_ACHIEVE;
+  N BY C_DEPEND*-.2; 
+  
+  !!!
+
+
+! ========================================================================
+! 5B | BROAD EXTRAVERSION
+! ========================================================================
+  E by E_WARMTH;
+  E by E_SOC;
+  E by E_CONF;
+  E by E_S_CONF;
+  E by E_AFFA;
+  E by E_SURGE;
+  E by E_VIGOR;
+  E by E_SOCDEP;
+  E by E_S_RELY;
+  E by E_POS;
+  E by E_GRATITUDE;
+  E by E_DISCLOSE;
+  E by E_ATTENTION;
+  E by E_EBDM;
+  E by E_ACCEPT;
+  E by E_EXCITE;
+  E by N_DISTRUST;
+
+  E BY N_IRRIT*-.2;
+  E by N_DEP*-.2;
+  E by N_INSECURE;
+  E by N_EXTRO;
+  E by N_CAUTIOUS;
+
+  E by O_CURIOUS*-2;
+  E BY O_NOVEL*.2;
+  E by O_ECCENTRIC;
+  E by O_HUMOR;
+  E by O_ABSORB;
+  E BY O_INTROSPEC *.5;
+  E by O_TRAD;
+
+  E by A_LEADER;
+  E by A_FORGIVE;
+  E by A_HELPFUL;
+  E by A_SYMPATHY;
+  E BY A_INDIFF*-.2;
+  E BY A_SUPERIOR*.2;
+  E BY A_STUBBORN*-.2; 
+  
+  E by C_IMPULSIVE;
+  E by C_ACHIEVE;
+
+  !!!
+
+
+
+! ========================================================================
+! 5C | BROAD OPENNESS
+! ========================================================================
+  O by O_CURIOUS;
+  O by O_ART;
+  O by O_ABSTRACT;
+  O by O_NOVEL;
+  O by O_ABSORB;
+  O by O_FANTA;
+  O by O_CREATIVE;
+  O by O_N_COG;
+  O by O_ECCENTRIC;
+  O by O_HUMOR;
+  O by O_INTROSPEC;
+  O by O_PUNITIVE;
+  O by O_TRAD;  
+
+  O by N_TOL_AMBI*.2;
+  O by N_EXTRO;
+  O by N_CAUTIOUS;
+  O by N_COURAGE;
+
+  O by E_EXCITE;
+
+  O by A_SYMPATHY;
+  O BY A_INDIFF*-.2   ; 
+
+  O BY C_EFFICACY*.2;
+
+  !!!
+
+
+! ========================================================================
+! 5D | BROAD AGREEABLENESS
+! ========================================================================
+  A  by A_FORGIVE        ;
+  A  by A_HELPFUL        ;
+  A  by A_SYMPATHY       ;
+  A  by A_HONEST         ;
+  A  by A_FAIR           ; 
+
+  A  by A_STUBBORN*-1    ;
+  A  BY A_CRITICAL*-1    ; 
+  A  by A_MANI*-1        ;
+  A  by A_IMMORAL*-1     ; 
+  A  by A_VENGEFUL*-1    ;
+  A  by A_SUPERIOR*-1    ;
+  A  by A_CONFRONT*-1    ;
+  A  by A_PROVOKE*-1     ;
+  A  BY A_ASSERT*-1      ; 
+  A  BY A_LEADER*-1      ; 
+  A  by A_INDIFF*-1      ;
+
+  A  by N_ENVY*-.2       ;
+  A  by N_INDECISIVE     ;
+  A  by N_COURAGE        ;
+  A  by N_CAUTIOUS       ;
+  A  by N_DISTRUST       ;
+  A  by N_IRRIT*-.2      ;
+
+  A  by E_ATTENTION*-.2  ; 
+  A  by E_EXCITE*-.2     ;
+  A  by E_CONF*-.2       ;
+  A  by E_S_CONF*.2      ;
+  A  by E_VIGOR*-2       ;
+  
+  A  BY O_CREATIVE*-.2   ;
+  A  BY O_ECCENTRIC*-.2  ;
+  A  by O_PUNITIVE       ;
+
+  A  by C_ACHIEVE        ;
+  A  by C_IMPULSIVE*-.5  ;
+  
+  !!!
+
+
+! ========================================================================
+! 5E | BROAD CONSCIENTIOUSNESS
+! ========================================================================
+  C  by C_S_CONTROL      ;
+  C  by C_PLAN           ;  
+  C  by C_ORDER          ;
+  C  by C_DETAIL         ;
+  C  by C_EFFICACY       ;
+  C  by C_DEPEND         ;
+  C  by C_PERSEVERE      ;
+  C  by C_IMPULSIVE*-1   ;
+  C  by C_PROCRAST*-1    ;
+  C  bY C_DISTRACT*-1    ;
+  C  by C_ACHIEVE        ;
+
+  C  by N_INDECISIVE*-.2 ;
+  C  by N_TOL_AMBI*.2    ;
+  C  by N_CAUTIOUS       ;
+
+  C  by E_EXCITE*-.2     ;
+  C  BY E_WARMTH*.2      ;
+  C  BY E_POS            ; 
+  C  BY E_ATTENTION*-.2  ; 
+  
+  C  by O_FANTA*-.2      ;
+  C  by O_ECCENTRIC*-.2  ;
+  C  by O_TRAD           ;
+  C  BY O_NOVEL*-.2      ;
+  C  BY O_PUNITIVE       ;
+
+  C  by A_IMMORAL*-.2    ;
+  
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+! ========================================================================
+! 6 | CORRELATED FACET RESIDUALS
+! WITH specifies covariance between facet residual components when they
+! are indicators of the broader factors; some relations are cross-domain.
+! These may reflect narrow common processes, semantic overlap, or local
+! dependence. They are not automatically additional global factors.
+! Lines beginning with ! are deliberately inactive/commented out.
+! ========================================================================
+  N_RUMINATE WITH N_WORRY *.2;
+
+  N_S_STRESS with N_WORRY*.2;
+  N_S_STRESS with N_IRRIT*.2;
+  N_WORRY    with N_IRRIT;
+  
+  N_CAUTIOUS with N_COURAGE*-.2;
+
+  N_DEP      with E_POS;
+  N_DEP      with E_SURGE*-.2;
+  N_DEP      with E_GRATITUDE*-.2;
+
+  N_S_CRITIC with E_ACCEPT;
+  N_S_CRITIC with E_CONF;
+
+  N_RUMINATE with E_SOCDEP*-.2;
+  N_COURAGE  with E_EXCITE;
+  N_CAUTIOUS with E_EXCITE;
+  N_COURAGE  with E_VIGOR;
+  
+  N_TOL_AMBI with O_N_COG;
+  N_EXTRO    with O_INTROSPEC;
+  
+  N_DEP      with A_SUPERIOR*-.2      ;
+  N_EXTRO    with A_HELPFUL;
+  N_TOL_AMBI with A_STUBBORN;
+  N_IRRIT    with A_STUBBORN;
+ 
+
+  !!!
+  
+
+! ========================================================================
+! 6B | RESIDUAL ASSOCIATIONS: E AND CROSS-DOMAIN
+! ========================================================================
+  E_AFFA     with E_CONF;
+  E_AFFA     with E_S_CONF;
+  E_CONF     with E_S_CONF;
+  E_SOC      with E_S_RELY;
+  E_CONF     with E_DISCLOSE;
+  E_VIGOR    WITH E_SURGE  ; 
+  E_WARMTH   with E_AFFA;
+
+  E_POS      WITH E_SURGE;
+  E_POS      with E_GRATITUDE;
+  E_SURGE    with E_GRATITUDE;
+
+  E_SURGE    with O_HUMOR*-.2;
+  E_DISCLOSE with O_TRAD;
+
+  E_WARMTH   with O_N_COG*-.2;
+  E_AFFA     with O_ABSTRACT*-.2;
+  E_EBDM     with O_FANTA;
+  E_EXCITE   with O_NOVEL;
+
+  E_WARMTH   with A_HELPFUL;
+  E_EBDM     with A_SUPERIOR;
+  E_ACCEPT   with A_ASSERT;
+  
+  E_VIGOR    with C_S_CONTROL*-.2;
+  E_EBDM     with C_IMPULSIVE;
+
+
+  !!!
+
+
+! ========================================================================
+! 6C | RESIDUAL ASSOCIATIONS: O AND CROSS-DOMAIN
+! ========================================================================
+  O_ABSTRACT  with O_N_COG;
+  O_FANTA     WITH O_ABSORB;
+  O_INTROSPEC WITH O_CREATIVE*-.2;
+  O_TRAD      WITH O_PUNITIVE;
+
+  O_N_COG     WITH E_EBDM*-.2   ; 
+  O_HUMOR     WITH E_VIGOR*-.2  ; 
+
+  O_ART       with C_EFFICACY*-.2;
+  
+
+  !!!
+
+
+! ========================================================================
+! 6D | RESIDUAL ASSOCIATIONS: A / ANTAGONISM
+! ========================================================================
+  A_MANI with A_VENGEFUL;
+  A_MANI with A_SUPERIOR;
+  A_MANI with A_CONFRONT;
+  A_MANI with A_PROVOKE;
+
+  A_VENGEFUL with A_SUPERIOR;
+  A_VENGEFUL with A_CONFRONT;
+  A_VENGEFUL with A_PROVOKE;
+
+!  A_SUPERIOR with A_CONFRONT;
+!  A_SUPERIOR with A_PROVOKE;
+
+  A_VENGEFUL with A_STUBBORN;
+  A_ASSERT   with A_STUBBORN;
+  A_CRITICAL with A_STUBBORN;
+  A_FORGIVE  with A_STUBBORN;
+
+  A_CONFRONT with A_PROVOKE;
+
+  A_PROVOKE   with A_CONFRONT;
+  A_SYMPATHY  WITH A_HELPFUL;
+
+  A_LEADER   WITH A_VENGEFUL*-.2;
+  A_FORGIVE  WITH A_VENGEFUL*-.2;
+
+  A_MANI     with A_IMMORAL;
+  A_VENGEFUL with A_IMMORAL;
+  A_SUPERIOR with A_IMMORAL;
+  A_CONFRONT with A_IMMORAL;
+  A_PROVOKE  with A_IMMORAL;
+
+  A_IMMORAL with C_S_CONTROL; 
+
+  A_HONEST  with A_IMMORAL*-.2;
+  A_HONEST  with A_MANI*-.2;
+ 
+  !!!
+
+
+! ========================================================================
+! 6E | RESIDUAL ASSOCIATIONS: C
+! ========================================================================
+  C_PROCRAST  with C_DISTRACT;
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  !!!
+
+
+! ========================================================================
+! 7 | ITEM-LEVEL EVALUATIVE / HALO FACTOR
+! HALO captures shared item covariance associated with evaluative tone.
+! Signed item loadings and selected equality labels constrain the model.
+! Identifying this as *pure* bias requires external multi-method evidence.
+! Ranges using the hyphen follow the ordering in NAMES / USEVARIABLES;
+! do not rewrite them as simple numeric sequences without verification.
+! ========================================================================
+  HALO by MQ34_2-MQ34_6*-1 (H_F34)      ; ! N_S_STRESS   
+  HALO by MQ35_2-MQ35_5@-1              ; ! N_WORRY
+  HALO by MQ36_1-MQ36_4*-1 (H_F36)      ; ! N_DEP
+  HALO by MQ37_1-MQ37_5*-1              ; ! N_RUMINATE
+  HALO by MQ38_1-MQ38_5*-1              ; ! N_IRRIT 
+  HALO by MQ39_1*-1 MQ39_4*-1 MQ39_5*-1 ; ! N4
+  HALO by MQ75_1 MQ75_2 MQ75_3          ; ! N_ENVY
+  HALO by MQ76_3 - MQ76_5               ; ! N_INDECISIVE
+  HALO by MQ77_3*-1 MQ77_5@0 MQ77_6@0   ; ! N_TOL_AMBI
+  HALO by MQ74_3 - MQ74_6*-1 (H_MQ74)   ; ! N_INSECURE
+  HALO by MQ67_2-MQ67_4*1 (H_MQ67)      ; ! N_EXTRO
+  HALO by MQ46_2 MQ46_5-MQ46_6*-1       ; ! N_COURAGE
+  HALO by MQ49_1 MQ49_2 MQ49_3          ; ! N_CAUTIOUS
+
+  !!!
+
+  HALO by MQ69_2-MQ69_6@1               ; ! E_WARMTH 
+  HALO by MQ23_1-MQ23_4*1               ; ! E_SOC
+  HALO by MQ27_3-MQ27_6@-1              ; ! E_CONF
+  HALO by MQ20_4-MQ20_6@1               ; ! E_S_CONF
+  HALO by MQ26_2-MQ26_6@1               ; ! E_AFFA
+  HALO by MQ31_3-MQ31_5*1               ; ! E_SURGE
+  HALO by MQ32_1-MQ32_3*1               ; ! E_VIGOR
+  HALO by MQ28_1-MQ28_6*-1 (H_F28)      ; ! E_SOCDEP
+  HALO by MQ25_3-MQ25_5@0               ; ! E_S_RELY
+  HALO by MQ30_3-MQ30_5@1               ; ! E_VIGOR 
+  HALO by MQ65_2-MQ65_4* (H_F65)        ; ! E_POS
+  HALO by MQ61_3-MQ61_6                 ; ! E_GRATITUDE
+  HALO by MQ63_1* MQ63_2@0 MQ63_3       ; ! E_EBDM
+  HALO by MQ29_3 MQ29_4 MQ29_6          ; ! E_ACCEPT
+  HALO by MQ59_2 MQ59_5 MQ59_6          ; ! E_EXCITE
+  HALO by MQ72_4 MQ72_5 MQ72_6          ; ! E_ATTENTION
+
+  !!!
+
+  HALO by MQ2_1-MQ2_3@1                 ; ! O_CURIOUS
+  HALO by MQ3_3-MQ3_5*1 (H_F3)          ; ! O_ART
+  HALO by MQ1_1-MQ1_5*1 (H_F1)          ; ! O_ABSTRACT
+  HALO by MQ54_2@1 MQ54_4@1 MQ54_5@-1   ; ! O_NOVEL 
+  HALO by MQ6_3-MQ6_5                   ; ! O_ABSORB
+  HALO by MQ7_1-MQ7_5                   ; ! O_FANTA
+  HALO by MQ5_3-MQ5_6@1                 ; ! O_CREATIVE
+  HALO by MQ4_1-MQ4_5@-1                ; ! O_N_COG
+  HALO by MQ17_4-MQ17_6*-1              ; ! O_ECCENTRIC
+  HALO by MQ60_1-MQ60_5                 ; ! O_HUMOR
+  HALO by MQ66_3 MQ66_4 MQ66_5          ; ! O_INTROSPEC
+  HALO by MQ52_1 MQ52_2 MQ52_3          ; ! O_PUNITIVE
+
+
+  !!!
+
+  HALO by MQ43_2 MQ43_4 MQ43_6          ; ! A_MANI     
+  HALO by MQ53_1 MQ53_3 MQ53_5          ; ! A_IMMORAL
+  HALO by MQ57_1-MQ57_6@-1              ; 
+  HALO by MQ42_1-MQ42_6@-1              ; ! (H_F42) ;  ! Grandiosity, Modesty (R)
+  HALO by MQ55_1-MQ55_6@-1              ; ! Aggression , Confrontational
+  HALO by MQ68_2-MQ68_5@-1              ;
+  HALO by MQ40_2-MQ40_5*-1              ; ! A_INDIFF
+  HALO by MQ24_2@-1 MQ24_4@1 MQ24_5@1   ;       ! A Leader (-)
+  HALO by MQ21_1-MQ21_5*1 (H_F21)       ;       ! A Forgiving  
+  HALO by MQ44_1-MQ44_6*1               ; ! A HELPFUL 
+  HALO by MQ45_3-MQ45_6*1 (H_F45)        ; ! A_SYMPATHY
+  HALO by MQ19_2-MQ19_4@-1              ; ! Critical
+  HALO by MQ18_2-MQ18_5*1 (H_F18)       ; ! A AsSERT (R)
+  HALO by MQ62_3 MQ62_4 MQ62_6          ; ! A_HONEST
+  HALO by MQ64_2 MQ64_4 MQ64_5          ; ! A_FAIR
+  HALO by MQ22_1 MQ22_3 MQ22_4          ; ! A_STUBBORN
+
+  HALO by MQ58_1-MQ58_4;
+  HALO by MQ50_1-MQ50_3;
+  HALO by MQ47_4-MQ47_6;
+   
+  !!!  
+
+  HALO by MQ10_2*1 MQ10_3*1 MQ10_4*-1   ;       ! C Self-Control 
+  HALO by MQ9_2-MQ9_4@1                 ; !  *(H_F9)    ;           ! C Planful !!!
+  HALO by MQ11_1@1 MQ11_2@-1 MQ11_6@1   ;           ! C2  Order
+  HALO by MQ16_2-MQ16_6*1 (H_F16)       ; ! C_DEPEND
+  HALO by MQ8_3 MQ8_4 MQ8_5             ; ! C_PERSEVERE
+  HALO by MQ14_1-MQ14_4@-1              ;       ! Impulsiveness 
+  HALO by MQ13_1-MQ13_3*-1 (H_F13)      ; ! C_PROCRAST
+  HALO by MQ73_3-MQ73_5*-1 (H_F73)      ;       ! C Disctractability
+  HALO by MQ12_1-MQ12_5*1               ; ! C_DETAIL
+  HALO by MQ15_2-MQ15_4@1               ;
+
+  !!!!!!!!!!!!!!!!!!!!!!!!
+
+
+! ========================================================================
+! 8 | ITEM-LEVEL RESPONSE-SET FACTOR
+! The syntax fixes all loadings in the declared Mplus variable range to 1.
+! The variable range follows USEVARIABLES order (not lexical item order).
+! This models a uniform response tendency across selected indicators.
+! The wide range should be checked against item coding and intended set.
+! ========================================================================
+  RSET by MQ34_2-MQ73_5@1; 
+
+
+
+
+
+! ========================================================================
+! 9 | REQUESTED OUTPUT
+! STDYX provides standardized estimates; MOD(40) requests modification
+! indices meeting the specified 40 threshold in the output.
+! Do not equate absence of MI >= 40 with global model confirmation.
+! Use fit, parsimony, residual pattern, and independent replication.
+! ========================================================================
+OUTPUT: STDYX MOD(40);
+  
+
+ 
+ 
+    
+
+
+
+
+
+
+
+
