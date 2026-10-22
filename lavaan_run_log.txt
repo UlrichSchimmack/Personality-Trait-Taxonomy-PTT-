@@ -1,0 +1,12 @@
+Data: https://raw.githubusercontent.com/UlrichSchimmack/Personality-Trait-Taxonomy-PTT-/HEAD/facet_map.dat 
+Fitting FacetMAP hierarchical model in lavaan...
+Rows: 1087  | observed variables: 210 
+There were 16 warnings (use warnings() to see them)
+
+Reference Mplus vs lavaan:
+                npar    chisq    df       cfi       tli      rmsea      srmr
+Mplus_reference 1016 36590.14 21349 0.9000000 0.8970000 0.02600000 0.0470000
+lavaan          1016 36590.14 21349 0.9000937 0.8973046 0.02562744 0.0489371
+
+Converged: TRUE 
+Free parameter difference (lavaan minus Mplus):  0 
